@@ -7,5 +7,6 @@ public class WordleGame implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
+
     }
 }

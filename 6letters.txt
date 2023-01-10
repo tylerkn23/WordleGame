@@ -803,7 +803,6 @@ bisque
 bissau
 bister
 bistro
-bitchy
 biting
 bitmap
 bitten
@@ -1679,7 +1678,6 @@ critic
 crocus
 cronus
 crosse
-crotch
 croton
 crouch
 croupy
@@ -2675,7 +2673,6 @@ fracta
 fraise
 framed
 framer
-france
 frangi
 frappe
 frayed
@@ -6658,7 +6655,6 @@ tailed
 tailor
 taipan
 taipei
-taiwan
 tajiki
 taking
 talcum
@@ -7233,7 +7229,6 @@ vacuum
 vadium
 vagary
 vagile
-vagina
 vainly
 vaisya
 vakass
