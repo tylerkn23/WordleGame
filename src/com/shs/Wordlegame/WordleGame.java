@@ -9,6 +9,9 @@ import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 import java.awt.event.*;
 import java.awt.*;
+import java.util.Random;
+import java.io.*;
+import java.nio.file.*;
 
 import static java.awt.Color.cyan;
 
@@ -80,6 +83,20 @@ public class WordleGame implements PropertyChangeListener {
             });
         }
 
+    }
+    public String GetWord(){
+        String a;
+        Random rand = new Random();
+        int random_int = (int)Math.floor(Math.random() * (7637+1));
+        File file = new File("6letters.txt");
+        try {
+            String line = Files.readAllLines(Paths.get("6letters.txt")).get(random_int);
+            return line;
+        }
+        catch(IOException e){
+            a = e.getMessage();
+        }
+        return "";
     }
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
