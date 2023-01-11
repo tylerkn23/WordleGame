@@ -1,3 +1,5 @@
+package com.shs.Wordlegame;
+
 import javax.swing.*;
 
 public class Main {
@@ -10,7 +12,7 @@ public class Main {
     }
 
     public static void runGUI() {
-        JFrame.setDefaultLookAndFeelDecorated(true);
+        JFrame.setDefaultLookAndFeelDecorated(false);
         WordleGame game = new WordleGame();
     }
 }
