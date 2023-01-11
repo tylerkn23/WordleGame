@@ -3,6 +3,10 @@ package com.shs.Wordlegame;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.PlainDocument;
 import java.awt.event.*;
 import java.awt.*;
 
@@ -11,7 +15,6 @@ public class WordleGame implements PropertyChangeListener {
     JFrame frame;
     JLabel title;
     JPanel layerPanel, contentPane, titlePanel;
-
     JTextField[] input = new JTextField[36];
 
     public WordleGame() {
@@ -60,16 +63,23 @@ public class WordleGame implements PropertyChangeListener {
                 public void keyTyped(KeyEvent e) {
                     char keyChar = e.getKeyChar();
                     if (Character.isLowerCase(keyChar)) {
-                        e.setKeyChar(Character.toUpperCase(keyChar));
+                        e.setKeyChar(Character.toUpperCase(keyChar)); //makes letter uppercase
                     }
                 }
 
             });
-
+            int finalI = i;
+            input[i].addKeyListener(new KeyAdapter() {
+                public void keyTyped(KeyEvent e) {
+                    if (input[finalI].getText().length() > 0 ) // limit textfield to one letter
+                        e.consume();
+                }
+            });
         }
 
     }
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
     }
+
 }
