@@ -10,6 +10,8 @@ import javax.swing.text.PlainDocument;
 import java.awt.event.*;
 import java.awt.*;
 
+import static java.awt.Color.cyan;
+
 public class WordleGame implements PropertyChangeListener {
 
     JFrame frame;
@@ -25,9 +27,10 @@ public class WordleGame implements PropertyChangeListener {
         contentPane = new JPanel();
         titlePanel = new JPanel();
 
-        // titlePanel.setBackground(Color.BLUE);
+        //titlePanel.setBackground(Color.BLUE);
         title = new JLabel("WORDLE");
-        title.setFont(new Font("Verdana", Font.PLAIN, 100));
+        title.setFont(new Font("Verdana", Font.PLAIN, sz.width/20));
+        //title.setForeground(Color.green);
         title.setHorizontalAlignment(JLabel.CENTER);
         titlePanel.setLayout(new BorderLayout());
         titlePanel.add(title, BorderLayout.CENTER);
@@ -47,16 +50,16 @@ public class WordleGame implements PropertyChangeListener {
         frame.setVisible(true);
         frame.pack();
         frame.setContentPane(layerPanel);
-        frame.setSize(sz.width, sz.height);
+        frame.setSize(sz.width/2, (sz.height/4)*3);
         frame.setResizable(false);
 
-        contentPane.setLayout(new GridLayout(6, 6, 10, 10));
-        contentPane.setBorder(BorderFactory.createEmptyBorder(100, 100, 100, 100));
+        contentPane.setLayout(new GridLayout(6, 6, sz.width/200, sz.height/200));
+        contentPane.setBorder(BorderFactory.createEmptyBorder(sz.height/50, sz.width/20, sz.height/20, sz.width/20));
 
         for (int i = 0; i < 36; i++) {
             input[i] = new JTextField();
             contentPane.add(input[i]);
-            input[i].setFont(new Font("Verdana", Font.BOLD, 100));
+            input[i].setFont(new Font("Verdana", Font.BOLD, sz.height/20));
             input[i].setHorizontalAlignment(JTextField.CENTER);
 
             input[i].addKeyListener(new KeyAdapter() {
