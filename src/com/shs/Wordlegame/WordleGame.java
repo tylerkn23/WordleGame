@@ -16,6 +16,7 @@ public class WordleGame implements PropertyChangeListener {
 
     public WordleGame() {
         frame = new JFrame("Wordle");
+        Dimension sz = Toolkit.getDefaultToolkit().getScreenSize();
 
         layerPanel = new JPanel();
         contentPane = new JPanel();
@@ -43,15 +44,17 @@ public class WordleGame implements PropertyChangeListener {
         frame.setVisible(true);
         frame.pack();
         frame.setContentPane(layerPanel);
-        frame.setSize(2000, 2000);
+        frame.setSize(sz.width, sz.height);
+        frame.setResizable(false);
 
         contentPane.setLayout(new GridLayout(6, 6, 10, 10));
-        contentPane.setBorder(BorderFactory.createEmptyBorder(250, 100, 100, 100));
+        contentPane.setBorder(BorderFactory.createEmptyBorder(100, 100, 100, 100));
 
         for (int i = 0; i < 36; i++) {
             input[i] = new JTextField();
             contentPane.add(input[i]);
             input[i].setFont(new Font("Verdana", Font.BOLD, 100));
+            input[i].setHorizontalAlignment(JTextField.CENTER);
         }
 
     }
