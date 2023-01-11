@@ -55,6 +55,17 @@ public class WordleGame implements PropertyChangeListener {
             contentPane.add(input[i]);
             input[i].setFont(new Font("Verdana", Font.BOLD, 100));
             input[i].setHorizontalAlignment(JTextField.CENTER);
+
+            input[i].addKeyListener(new KeyAdapter() {
+                public void keyTyped(KeyEvent e) {
+                    char keyChar = e.getKeyChar();
+                    if (Character.isLowerCase(keyChar)) {
+                        e.setKeyChar(Character.toUpperCase(keyChar));
+                    }
+                }
+
+            });
+
         }
 
     }
