@@ -32,7 +32,7 @@ public class WordleGame implements PropertyChangeListener {
 
         //titlePanel.setBackground(Color.BLUE);
         title = new JLabel("WORDLE");
-        title.setFont(new Font("Verdana", Font.PLAIN, sz.width/20));
+        title.setFont(new Font("Serif", Font.BOLD, sz.width/20));
         //title.setForeground(Color.green);
         title.setHorizontalAlignment(JLabel.CENTER);
         titlePanel.setLayout(new BorderLayout());
