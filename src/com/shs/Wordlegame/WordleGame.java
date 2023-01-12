@@ -6,6 +6,7 @@ import java.awt.*;
 import java.util.Random;
 import java.io.*;
 import java.nio.file.*;
+import java.util.regex.Matcher;
 
 public class WordleGame {
 
@@ -70,6 +71,32 @@ public class WordleGame {
             a = e.getMessage();
         }
         return "";
+    }
+    public boolean checkWord(String w){
+        File file = new File("6letters.txt");
+        FileReader in;
+        BufferedReader readFile;
+        String word;
+        try {
+
+            in = new FileReader(file);
+            readFile = new BufferedReader(in);
+
+            while ((word = readFile.readLine()) != null) {
+               if (word.equals(w)) {
+                   return true;
+               }
+            }
+            readFile.close();
+            in.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File does not exist or could not be found.");
+            System.err.println("FileNotFoundException: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Problem reading file.");
+            System.err.println("IOException: " + e.getMessage());
+        }
+        return false;
     }
 
     public void addTitle() {
@@ -163,8 +190,11 @@ public class WordleGame {
                         }
                     } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                         if (guess.length() == 6) {
-                            setEditableTextFields(++guesses);
-                            outerBound+=6;
+                            if (checkWord(guess)) {
+                                setEditableTextFields(++guesses);
+                                outerBound+=6;
+                                guess = "";
+                            }
                         }
                     }
                 }
