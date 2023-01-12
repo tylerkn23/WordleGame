@@ -117,9 +117,14 @@ public class WordleGame {
         for (int i = num; i < num + 6; i++) {
             input[i].setEditable(true);
             manager.focusNextComponent();
+            input[i].setBackground(Color.white);
+            input[i].setForeground(Color.black);
         }
         for (int i = num - 6; i < num; i++) {
             input[i].setEditable(false);
+            input[i].setBackground(Color.darkGray);
+            //set it to green if right, yellow if it's in the word, and grey if it's not in the word.
+            input[i].setForeground(Color.white);
         }
     }
 
