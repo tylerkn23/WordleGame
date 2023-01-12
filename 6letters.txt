@@ -2785,6 +2785,7 @@ gambit
 gamble
 gambol
 gamely
+gamers
 gamete
 gaming
 gammer
