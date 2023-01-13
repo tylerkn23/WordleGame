@@ -6656,6 +6656,7 @@ tailed
 tailor
 taipan
 taipei
+taiwan
 tajiki
 taking
 talcum
@@ -6767,7 +6768,6 @@ tetrad
 tetrao
 tetter
 teuton
-thtre
 thalia
 thames
 thanks
