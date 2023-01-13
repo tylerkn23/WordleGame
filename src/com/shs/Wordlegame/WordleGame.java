@@ -266,7 +266,7 @@ public class WordleGame {
                             e.setKeyChar(Character.toUpperCase(keyChar)); //makes text uppercase
                         }
                         if (checkElementInArray() < 6) {
-                            addLetterToArray(guesses, finalI, keyChar);
+                            addLetterToArray(guesses, finalI, Character.toLowerCase(keyChar));
                         }
                         if(input[outerBound].isFocusOwner()) {
                         } else {
