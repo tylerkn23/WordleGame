@@ -22,6 +22,7 @@ public class WordleGame {
     Color yellow = new Color(200,182,83);
     Color green = new Color(108,169,101);
     String word = getWord();
+    //String word = "canton";
     String[] guess = new String[6];
 
     public WordleGame() {
@@ -164,19 +165,23 @@ public class WordleGame {
         for (int i = 0; i < 6; i++) {
             if ((guess[i]).equals(String.valueOf(phrase[i]))) {
                 input[i+6*guesses].setBackground(green);
+                guess[i] = "";
                 phrase[i] = Character.MIN_VALUE;
                 match++;
-            } else {
-                for(int j = 1; j < 6; j++) {
-                    if ((guess[i]).equals(String.valueOf(phrase[j]))) {
-                        input[i+6*guesses].setBackground(yellow);
-                        phrase[j] = Character.MIN_VALUE;
-                    }
+            }
+        }
+        for (int i = 0; i < 6; i++) {
+            for(int j = 0; j < 6; j++) {
+                if ((guess[i]).equals(String.valueOf(phrase[j]))) {
+                    input[i+6*guesses].setBackground(yellow);
+                    guess[i] = "";
+                    phrase[j] = Character.MIN_VALUE;
                 }
             }
         }
         if (match == 6) {
             winScreen();
+            changeEditableTextFieldsFalse();
         } else {
             if (guesses == 5) {
                 loseScreen();
@@ -219,7 +224,7 @@ public class WordleGame {
     }
 
     public void loseScreen() {
-        createDialog("You Lose!");
+        createDialog(word);
     }
 
     public void createDialog(String s) {
@@ -261,6 +266,11 @@ public class WordleGame {
                     } else {
                         if (input[finalI].getText().length() > 0) {
                             e.consume(); //prevents more than 1 letter being typed
+                            if(input[outerBound].isFocusOwner()) {
+                            } else {
+                                manager.focusNextComponent(); //automatically moves to the next box
+                                return;
+                            }
                         }
                         if (Character.isLowerCase(keyChar)) {
                             e.setKeyChar(Character.toUpperCase(keyChar)); //makes text uppercase
@@ -304,5 +314,4 @@ public class WordleGame {
             });
         }
     }
-
 }
