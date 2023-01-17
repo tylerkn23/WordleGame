@@ -9,30 +9,38 @@ import java.nio.file.*;
 
 public class WordleGame {
 
-    JFrame frame;
-    JLabel title;
-    JPanel layerPanel, contentPane, titlePanel;
-    JTextField[] input = new JTextField[36];
-    Dimension sz = Toolkit.getDefaultToolkit().getScreenSize();
-    KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-    GridBagConstraints c = new GridBagConstraints();
-
-    int guesses = 0;
-    int outerBound = 5;
-    Color yellow = new Color(200,182,83);
-    Color green = new Color(108,169,101);
-    String word = getWord();
-    //String word = "canton";
-    String[] guess = new String[6];
+    private JFrame frame;
+    private JPanel contentPane;
+    private final JTextField[] input = new JTextField[36];
+    private final Dimension sz = Toolkit.getDefaultToolkit().getScreenSize();
+    private final KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+    private final GridBagConstraints c = new GridBagConstraints();
+    private int guesses = 0;
+    private int outerBound = 5;
+    private final Color yellow = new Color(200,182,83);
+    private final Color green = new Color(108,169,101);
+    private final String word = getWord();
+    private final String[] guess = new String[6];
 
     public WordleGame() {
+        createUI();
+        createTextFields();
+        changeEditableTextFieldsFalse();
+        checkForInput();
+    }
+
+    public void createUI() {
         frame = new JFrame("Wordle");
 
-        layerPanel = new JPanel();
+        JPanel layerPanel = new JPanel();
         contentPane = new JPanel();
-        titlePanel = new JPanel();
+        JPanel titlePanel = new JPanel();
 
-        addTitle();
+        JLabel title = new JLabel("WORDLE");
+        title.setFont(new Font("Serif", Font.BOLD, sz.width/20));
+        title.setHorizontalAlignment(JLabel.CENTER);
+        titlePanel.setLayout(new BorderLayout());
+        titlePanel.add(title, BorderLayout.CENTER);
 
         layerPanel.setLayout(new GridBagLayout());
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -53,12 +61,6 @@ public class WordleGame {
 
         contentPane.setLayout(new GridLayout(6, 6, sz.width/200, sz.height/200));
         contentPane.setBorder(BorderFactory.createEmptyBorder(sz.height/50, sz.width/20, sz.height/20, sz.width/20));
-
-        createTextFields();
-        addTextFields();
-        input[0].requestFocusInWindow();
-        changeEditableTextFieldsFalse();
-        checkForInput();
     }
     public String getWord(){
         int random_int = (int)Math.floor(Math.random() * (450+1));
@@ -83,14 +85,14 @@ public class WordleGame {
         }
         String guess = strBuilder.toString();
 
-            try {
+        try {
             in = new FileReader(file);
             readFile = new BufferedReader(in);
 
             while ((word = readFile.readLine()) != null) {
-               if (word.equals(guess)) {
-                   return true;
-               }
+                if (word.equals(guess)) {
+                    return true;
+                }
             }
             readFile.close();
             in.close();
@@ -103,27 +105,14 @@ public class WordleGame {
         }
         return false;
     }
-
-    public void addTitle() {
-        title = new JLabel("WORDLE");
-        title.setFont(new Font("Serif", Font.BOLD, sz.width/20));
-        title.setHorizontalAlignment(JLabel.CENTER);
-        titlePanel.setLayout(new BorderLayout());
-        titlePanel.add(title, BorderLayout.CENTER);
-    }
-
     public void createTextFields() {
         for (int i = 0; i < 36; i++) {
             input[i] = new JTextField();
             input[i].setFont(new Font("Verdana", Font.BOLD, sz.height/20));
             input[i].setHorizontalAlignment(JTextField.CENTER);
-        }
-    }
-
-    public void addTextFields() {
-        for (int i = 0; i < 36; i++) {
             contentPane.add(input[i]);
         }
+        input[0].requestFocusInWindow();
     }
 
     public void setEditableTextFields(int guesses) {
@@ -189,28 +178,6 @@ public class WordleGame {
         }
     }
 
-    public void addLetterToArray(int guesses, int index, Character letter) {
-        switch (guesses) {
-            case 0: guess[index] = letter.toString(); return;
-            case 1: guess[index-6] = letter.toString(); return;
-            case 2: guess[index-12] = letter.toString(); return;
-            case 3: guess[index-18] = letter.toString(); return;
-            case 4: guess[index-24] = letter.toString(); return;
-            case 5: guess[index-30] = letter.toString();
-        }
-    }
-
-    public void removeLetterFromArray(int guesses, int index) {
-        switch (guesses) {
-            case 0: guess[index] = null; return;
-            case 1: guess[index-6] = null; return;
-            case 2: guess[index-12] = null; return;
-            case 3: guess[index-18] = null; return;
-            case 4: guess[index-24] = null; return;
-            case 5: guess[index-30] = null;
-        }
-    }
-
     public int checkElementInArray() {
         int counter = 0;
         for (String s : guess)
@@ -220,37 +187,58 @@ public class WordleGame {
     }
 
     public void winScreen() {
-        createDialog("You Win!");
+        createDialog("You won!");
     }
 
     public void loseScreen() {
-        createDialog(word);
+        createDialog("You lost!");
     }
 
     public void createDialog(String s) {
-        JPanel bottomPane = new JPanel();
-
+        JPanel pane = new JPanel();
         JFrame f = new JFrame();
+
         JLabel l = new JLabel(s);
-        l.setHorizontalAlignment(JLabel.CENTER);
+        l.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         l.setFont(new Font("Serif", Font.BOLD, sz.width/20));
 
+        JLabel w = new JLabel("The word was " + "\"" + word + "\"");
+        w.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        w.setFont(new Font("Serif", Font.BOLD, sz.width/30));
         JDialog d = new JDialog(f , s, true);
-        d.setLayout(new GridLayout(2, 1, 100, 100));
+        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
 
-        JButton b = new JButton ("OK");
-        bottomPane.add(b);
-        bottomPane.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        JButton b = new JButton ("Play Again");
+        b.setAlignmentX(JButton.CENTER_ALIGNMENT);
+
         b.addActionListener(e -> {
+            new WordleGame();
             d.setVisible(false);
             frame.dispose();
         });
-        b.setPreferredSize(new Dimension(400, 400));
+        b.setPreferredSize(new Dimension(800, 300));
         b.setFont(new Font("Serif", Font.BOLD, sz.width/20));
 
+        JButton p = new JButton ("Close");
+        p.setAlignmentX(JButton.CENTER_ALIGNMENT);
+
+        p.addActionListener(e -> {
+            d.setVisible(false);
+            frame.dispose();
+        });
+        p.setPreferredSize(new Dimension(800, 300));
+        p.setFont(new Font("Serif", Font.BOLD, sz.width/20));
+
+
+        pane.add(l);
+        pane.add(w);
+        pane.add(Box.createVerticalGlue());
+        pane.add(b);
+        pane.add(p);
+        pane.setBorder(BorderFactory.createEmptyBorder(200, 20, 200, 20));
+
         d.setSize(sz.width/2, (sz.height/4)*3);
-        d.add(l);
-        d.add(bottomPane);
+        d.add(pane);
         d.setVisible(true);
     }
 
@@ -276,7 +264,7 @@ public class WordleGame {
                             e.setKeyChar(Character.toUpperCase(keyChar)); //makes text uppercase
                         }
                         if (checkElementInArray() < 6) {
-                            addLetterToArray(guesses, finalI, Character.toLowerCase(keyChar));
+                            guess[finalI-6*guesses] = String.valueOf((Character.toLowerCase(keyChar)));
                         }
                         if(input[outerBound].isFocusOwner()) {
                         } else {
@@ -294,7 +282,7 @@ public class WordleGame {
                             }
                             if (checkElementInArray() == 0) {
                             } else {
-                                removeLetterFromArray(guesses, finalI);
+                                guess[finalI-6*guesses] = null;
                             }
                         }
                     } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {

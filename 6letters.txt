@@ -2462,6 +2462,7 @@ farrow
 fasces
 fascia
 fasten
+faster
 father
 fathom
 fatras
@@ -5758,6 +5759,7 @@ rouged
 rouges
 rounds
 rouser
+router
 roving
 rowing
 rubber
